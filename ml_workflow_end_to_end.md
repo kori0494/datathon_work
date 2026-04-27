@@ -37,8 +37,7 @@ Mốc so sánh: nếu model của bạn không beat được Naive thì có vấ
 
 **📄 Bài báo gốc**:
 > Taylor, S. J., & Letham, B. (2018). **Forecasting at Scale**. *The American Statistician*, 72(1), 37–45.  
-> DOI: [10.1080/00031305.2017.1380080](https://doi.org/10.1080/00031305.2017.1380080)  
-> arXiv: [https://arxiv.org/abs/1701.09209](https://arxiv.org/abs/1701.09209)
+> Link: http://lethalletham.com/ForecastingAtScale.pdf
 
 **Prophet làm gì với dữ liệu của bạn?**
 
