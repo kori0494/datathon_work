@@ -1,181 +1,100 @@
-# datathon_work
-Repo làm việc của nhóm GGB trong datathon
-# 📘 Git Workflow Guide for Team Collaboration
+# E-Commerce Analytics & Revenue Forecasting
 
-## 🎯 Mục tiêu
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Tài liệu này hướng dẫn cách sử dụng Git trong project để:
-
-* Làm việc theo **branch riêng**
-* Tránh conflict
-* Dễ dàng merge code về `main`
+> An end-to-end data science pipeline to analyze e-commerce performance, uncover actionable business insights, and forecast long-term revenue and costs using a Prophet + XGBoost hybrid architecture.
 
 ---
 
-## 📌 Nguyên tắc chung
+## 📖 Table of Contents
 
-* `main` = code ổn định (KHÔNG code trực tiếp vào đây)
-* Mỗi người làm việc trên **branch riêng**
-* Khi xong → tạo **Pull Request (PR)** để merge
-
----
-
-## 🚀 1. Setup lần đầu
-
-### Clone repo
-
-```bash
-git clone https://github.com/<username>/<repo>.git
-cd <repo>
-```
+* [About the Project](#about-the-project)
+* [Directory Structure](#directory-structure)
+* [Phased Approach & Notebooks](#phased-approach--notebooks)
+* [Tech Stack](#tech-stack)
+* [Getting Started](#getting-started)
+* [Execution Order](#execution-order)
+* [License](#license)
 
 ---
 
-## 🌿 2. Tạo branch để làm việc
+## 🚀 About the Project
 
-Luôn tạo branch từ `main` mới nhất:
+This repository contains a comprehensive Machine Learning and Data Analytics workflow built for a complex, multi-table e-commerce environment. It takes raw relational data (orders, customers, products, etc.) and transforms it into highly accurate, 548-day forecasts for Daily Revenue and Cost of Goods Sold (COGS). 
 
-```bash
-git switch main
-git pull
-git switch -c feature-ten-cua-ban
-```
-
-Ví dụ:
-
-```bash
-git switch -c feature-data-cleaning
-```
+By leveraging Explainable AI (SHAP) and a hybrid time-series modeling approach, this project bridges the gap between deep exploratory business intelligence and advanced machine learning predictions.
 
 ---
 
-## ⬆️ 3. Push branch lên GitHub
+## 📂 Directory Structure
 
-```bash
-git push -u origin feature-ten-cua-ban
-```
+The project relies on a specific directory structure to handle data inputs and outputs efficiently. 
 
----
+* **Raw Data:** All original `.csv` files must be placed inside the `notebook/csv/` directory.
+* **Outputs:** All generated files (processed datasets, model artifacts, and evaluation plots) are outputted directly to the root of the `notebook/` directory.
+```text
+├── notebook/
+│   ├── csv/                    # Place all original raw datasets here
+│   │   ├── orders.csv
+│   │   ├── customers.csv
+│   │   ├── products.csv
+│   │   └── ... (other raw tables)
+│   ├── baseline.ipynb          # Model baseline establishment
+│   ├── Phase_1.ipynb           # Data Cleaning, Auditing
+│   ├── Phase_1_EDA.ipynb       # Exploratory Data Analysis
+│   ├── Phase_2.ipynb           # Data Preprocessing 
+│   ├── Phase_3.ipynb # Core ML Forecasting pipeline
+│   ├── [generated_outputs].csv # Outputs are saved here automatically
+│   └── [generated_plots].png   # Visualizations are saved here automatically
+├── requirements.txt            # Python dependencies
+└── README.md
 
-## 💻 4. Làm việc hằng ngày
+## 🗂️ Phased Approach & Notebooks
 
-Sau khi code:
+The pipeline is split into logical phases, documented across multiple Jupyter Notebooks.
 
-```bash
-git add .
-git commit -m "mô tả thay đổi"
-git push
-```
+### 0. Establishing the Baseline (`baseline.ipynb`)
+Before deploying complex models, this notebook establishes a performance floor using simple moving averages or naive historical projections. This provides a quantifiable benchmark to ensure our advanced machine learning models are actually adding predictive value.
 
----
+### 1. Exploratory & Prescriptive Analytics (`Phase_1.ipynb`, `Phase_1_EDA.ipynb`)
+Extracts actionable business insights from the relational database.
 
-## 🔄 5. Đồng bộ với main (rất quan trọng)
+* **Promotion ROI:** Analyzes which promotional campaigns drive profitable growth.
+* **Return Rate Deep-Dive:** Identifies key drivers behind product returns.
+* **Customer Segmentation:** Segments users using RFM (Recency, Frequency, Monetary) to find "Golden Customers."
+* **Seasonal Demand Planning:** Maps historical seasonal trends for inventory optimization.
 
-Trước khi tiếp tục làm việc, luôn update branch:
+### 2. Data Preprocessing & Feature Engineering (`Phase_2.ipynb`)
+Wrangling raw dimensional tables into a unified, time-series-ready format.
 
-```bash
-git switch main
-git pull
+* Aggregates daily operational metrics (sales, traffic, shipments).
+* Handles missing values, aligns timelines, and addresses anomalies.
+* Generates rolling aggregates and temporal lag features required for advanced modeling.
 
-git switch feature-ten-cua-ban
-git merge main
-```
+### 3. Hybrid ML Forecasting (`Phase_3.ipynb`)
+Forecasts Daily Revenue and COGS over an extensive 548-day horizon.
 
-👉 Giúp tránh conflict lớn khi merge
-
----
-
-## 🔀 6. Merge code về main
-
-### Cách chuẩn (khuyên dùng):
-
-* Lên GitHub
-* Tạo **Pull Request**
-* Review → Merge
-
----
-
-### Cách bằng terminal:
-
-```bash
-git switch main
-git pull
-git merge feature-ten-cua-ban
-git push
-```
+* **Prophet + XGBoost Hybrid:** Uses Meta's Prophet to capture macro trends and seasonality. XGBoost is applied to predict the residuals (traffic spikes, momentum, promotional impacts).
+* **Recursive Forecasting:** Implements dynamic lag mechanisms updated day-by-day throughout the test period.
+* **Model Explainability:** Integrates SHAP to interpret feature importance and explain the drivers of the XGBoost predictions.
 
 ---
 
-## 👥 7. Làm việc với branch của người khác
+## 🛠️ Tech Stack
 
-```bash
-git fetch
-git switch -t origin/ten-branch
-```
-
----
-
-## ⚠️ 8. Những lỗi cần tránh
-
-### ❌ Không làm trực tiếp trên main
-
-### ❌ Không pull trước khi code
-
-### ❌ Không push code chưa commit
-
-### ❌ Không đặt tên branch lung tung
+* **Data Manipulation:** `pandas`, `numpy`
+* **Data Visualization:** `matplotlib`, `seaborn`
+* **Time Series & Machine Learning:** `prophet`, `xgboost`, `scikit-learn`
+* **Explainable AI & Hyperparameter Tuning:** `shap`, `optuna`
 
 ---
 
-## 🏷️ 9. Quy ước đặt tên branch
+## 🏃‍♂️ Execution Order
 
-* `feature/...` → tính năng mới
-* `bugfix/...` → sửa lỗi
-* `experiment/...` → thử nghiệm
+To reproduce the full pipeline and avoid missing data dependencies, run the notebooks in the `notebook/` directory in the following order:
 
-Ví dụ:
-
-```
-feature/login
-feature/data-cleaning
-bugfix/missing-value
-```
-
----
-
-## 🔥 10. Flow chuẩn cho team
-
-1. Clone repo
-2. Tạo branch riêng
-3. Code + commit + push
-4. Tạo Pull Request
-5. Merge vào `main`
-
----
-
-## 💡 Tip hữu ích
-
-Xem trạng thái:
-
-```bash
-git status
-```
-
-Xem branch:
-
-```bash
-git branch -a
-```
-
----
-
-## 📌 Tổng kết
-
-👉 Mỗi người = 1 branch
-👉 Không đụng vào `main`
-👉 Luôn pull trước khi làm
-👉 Dùng Pull Request để merge
-
----
-
-Chúc team làm việc mượt mà 🚀
+1. **`Phase_1.ipynb`** (For Data Cleaning, Auditing)
+2. **`Phase_1_EDA.ipynb`** (For data exploration and business intelligence)
+3. **`Phase_2.ipynb`** (To generate the final merged and cleaned dataset for modeling)
+4. **`Phase_3.ipynb`** (To train the final hybrid model, generate predictions, and output SHAP explanations)
