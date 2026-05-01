@@ -1,96 +1,160 @@
-# E-Commerce Analytics & Revenue Forecasting
+# 📊 E-Commerce Analytics & Revenue Forecasting
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> An end-to-end data science pipeline to analyze e-commerce performance, uncover actionable business insights, and forecast long-term revenue and costs using a Prophet + XGBoost hybrid architecture.
+> 🚀 End-to-end data science pipeline for analyzing e-commerce performance, generating actionable business insights, and forecasting long-term revenue & COGS using a **Prophet + XGBoost hybrid architecture**.
 
 ---
 
 ## 📖 Table of Contents
 
-* [About the Project](#about-the-project)
-* [Directory Structure](#directory-structure)
-* [Phased Approach & Notebooks](#phased-approach--notebooks)
-* [Tech Stack](#tech-stack)
-* [Getting Started](#getting-started)
-* [Execution Order](#execution-order)
-* [License](#license)
+- [About the Project](#-about-the-project)
+- [Key Features](#-key-features)
+- [Directory Structure](#-directory-structure)
+- [Phased Approach](#-phased-approach)
+- [Tech Stack](#-tech-stack)
+- [Execution Order](#-execution-order)
+- [Output](#-outputs)
 
 ---
 
 ## 🚀 About the Project
 
-This repository contains a comprehensive Machine Learning and Data Analytics workflow built for a complex, multi-table e-commerce environment. It takes raw relational data (orders, customers, products, etc.) and transforms it into highly accurate, 548-day forecasts for Daily Revenue and Cost of Goods Sold (COGS). 
+This project implements a **complete machine learning and analytics workflow** for a multi-table e-commerce environment.
 
-By leveraging Explainable AI (SHAP) and a hybrid time-series modeling approach, this project bridges the gap between deep exploratory business intelligence and advanced machine learning predictions.
+It transforms raw relational data (orders, customers, products, etc.) into:
+
+- 📈 **548-day forecasts**
+- 💰 Daily **Revenue & COGS predictions**
+- 🔍 Deep **business insights**
+
+The pipeline bridges **business intelligence** and **advanced machine learning**, enabling both:
+- Strategic decision-making
+- High-accuracy forecasting
+
+---
+
+## ✨ Key Features
+
+- 🔗 **End-to-end pipeline** (raw data → insights → forecasting)
+- 📊 **Advanced EDA & business analytics**
+- 🧠 **Hybrid forecasting model**:
+  - Prophet → trend & seasonality
+  - XGBoost → residual patterns
+- 🔍 **Explainable AI (SHAP)**
+- 🔁 **Recursive multi-step forecasting (548 days)**
+- ⚙️ **Robust feature engineering (lags, rolling stats)**
 
 ---
 
 ## 📂 Directory Structure
 
-The project relies on a specific directory structure to handle data inputs and outputs efficiently. 
-
-* **Raw Data:** All original `.csv` files must be placed inside the `notebook/csv/` directory.
-* **Outputs:** All generated files (processed datasets, model artifacts, and evaluation plots) are outputted directly to the root of the `notebook/` directory.
 ```text
 ├── notebook/
-│   ├── csv/                    # Place all original raw datasets here
+│   ├── csv/                    # Raw datasets (INPUT)
 │   │   ├── orders.csv
 │   │   ├── customers.csv
 │   │   ├── products.csv
-│   │   └── ... (other raw tables)
-│   ├── baseline.ipynb          # Model baseline establishment
-│   ├── Phase_1.ipynb           # Data Cleaning, Auditing
-│   ├── Phase_1_EDA.ipynb       # Exploratory Data Analysis
-│   ├── Phase_2.ipynb           # Data Preprocessing 
-│   ├── Phase_3.ipynb # Core ML Forecasting pipeline
-│   ├── [generated_outputs].csv # Outputs are saved here automatically
-│   └── [generated_plots].png   # Visualizations are saved here automatically
-├── requirements.txt            # Python dependencies
+│   │   └── ...
+│   │
+│   ├── baseline.ipynb          # Baseline model
+│   ├── Phase_1.ipynb           # Data cleaning & auditing
+│   ├── Phase_1_EDA.ipynb       # Exploratory data analysis
+│   ├── Phase_2.ipynb           # Feature engineering
+│   ├── Phase_3.ipynb           # Forecasting pipeline
+│   │
+│   ├── *.csv                   # Generated datasets (OUTPUT)
+│   └── *.png                   # Generated plots (OUTPUT)
+│
+├── requirements.txt
 └── README.md
 
-🗂️ PHASED APPROACH & NOTEBOOKS
-The pipeline is split into logical phases, documented across multiple Jupyter Notebooks.
+## 🧠 Phased Approach
 
-1️⃣ Exploratory & Prescriptive Analytics (`Phase_1.ipynb`, `Phase_1_EDA.ipynb`)
-Extracts actionable business insights from the relational database.
+The project is structured into clear, logical phases:
 
-➤ Promotion ROI: Analyzes which promotional campaigns drive profitable growth.
-➤ Return Rate Deep-Dive: Identifies key drivers behind product returns.
-➤ Customer Segmentation: Segments users using RFM (Recency, Frequency, Monetary) to find "Golden Customers."
-➤ Seasonal Demand Planning: Maps historical seasonal trends for inventory optimization.
+---
 
-2️⃣ Data Preprocessing & Feature Engineering (`Phase_2.ipynb`)
-Wrangling raw dimensional tables into a unified, time-series-ready format.
+### 1️⃣ Exploratory & Prescriptive Analytics  
+**(`Phase_1.ipynb`, `Phase_1_EDA.ipynb`)**
 
-➤ Aggregates daily operational metrics (sales, traffic, shipments).
-➤ Handles missing values, aligns timelines, and addresses anomalies.
-➤ Generates rolling aggregates and temporal lag features required for advanced modeling.
+**Focus:** Extract business insights
 
-3️⃣ Hybrid ML Forecasting (`Phase_3.ipynb`)
-Forecasts Daily Revenue and COGS over an extensive 548-day horizon.
+- 📊 Promotion ROI analysis  
+- 🔁 Return rate diagnostics  
+- 👥 Customer segmentation (RFM)  
+- 📅 Seasonal demand patterns  
 
-➤ Prophet + XGBoost Hybrid: Uses Meta's Prophet to capture macro trends and seasonality. XGBoost is applied to predict the residuals (traffic spikes, momentum, promotional impacts).
-➤ Recursive Forecasting: Implements dynamic lag mechanisms updated day-by-day throughout the test period.
-➤ Model Explainability: Integrates SHAP to interpret feature importance and explain the drivers of the XGBoost predictions.
+---
 
-────────────────────────────────────────
+### 2️⃣ Data Preprocessing & Feature Engineering  
+**(`Phase_2.ipynb`)**
 
-🛠️ TECH STACK
+**Focus:** Build modeling dataset
 
-⬩ Data Manipulation: pandas, numpy
-⬩ Data Visualization: matplotlib, seaborn
-⬩ Time Series & Machine Learning: prophet, xgboost, scikit-learn
-⬩ Explainable AI & Hyperparameter Tuning: shap, optuna
+- Aggregate daily metrics (sales, traffic, shipments)  
+- Handle missing values & anomalies  
+- Align timelines across datasets  
 
-────────────────────────────────────────
+**Feature Engineering includes:**
+- Lag features  
+- Rolling statistics  
+- Temporal signals  
 
-🏃‍♂️ EXECUTION ORDER
+---
 
-To reproduce the full pipeline and avoid missing data dependencies, run the notebooks in the `notebook/` directory in the following order:
+### 3️⃣ Hybrid ML Forecasting  
+**(`Phase_3.ipynb`)**
 
-[ 1 ] `Phase_1.ipynb` (For Data Cleaning, Auditing)
-[ 2 ] `Phase_1_EDA.ipynb` (For data exploration and business intelligence)
-[ 3 ] `Phase_2.ipynb` (To generate the final merged and cleaned dataset for modeling)
-[ 4 ] `Phase_3.ipynb` (To train the final hybrid model, generate predictions, and output SHAP explanations)
+**Focus:** Long-term prediction
+
+- Prophet captures:
+  - Trend  
+  - Seasonality  
+
+- XGBoost models:
+  - Residuals  
+  - Promotions  
+  - Demand spikes  
+
+- Recursive forecasting for **548 days**  
+- SHAP for model interpretability  
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Tools |
+|----------|------|
+| Data Processing | `pandas`, `numpy` |
+| Visualization | `matplotlib`, `seaborn` |
+| Machine Learning | `scikit-learn`, `xgboost` |
+| Time Series | `prophet` |
+| Explainability | `shap` |
+| Optimization | `optuna` |
+
+
+## ▶️ Execution Order
+
+Run notebooks in sequence:
+
+Install initial independencies: pip install -r requirements.txt
+
+[1] Phase_1.ipynb        → Data cleaning & auditing
+[2] Phase_1_EDA.ipynb    → Exploration & insights
+[3] Phase_2.ipynb        → Feature engineering
+[4] Phase_3.ipynb        → Forecasting & SHAP analysis
+
+## 📈 Outputs
+
+The pipeline generates:
+
+📊 Processed datasets (.csv)
+📉 Forecast results (Revenue & COGS)
+📌 Visualization plots (.png)
+🔍 SHAP explanation plots
+
+All outputs are saved in:
+
+notebook/
