@@ -50,51 +50,47 @@ The project relies on a specific directory structure to handle data inputs and o
 ├── requirements.txt            # Python dependencies
 └── README.md
 
-## 🗂️ Phased Approach & Notebooks
-
+🗂️ PHASED APPROACH & NOTEBOOKS
 The pipeline is split into logical phases, documented across multiple Jupyter Notebooks.
 
-### 0. Establishing the Baseline (`baseline.ipynb`)
-Before deploying complex models, this notebook establishes a performance floor using simple moving averages or naive historical projections. This provides a quantifiable benchmark to ensure our advanced machine learning models are actually adding predictive value.
-
-### 1. Exploratory & Prescriptive Analytics (`Phase_1.ipynb`, `Phase_1_EDA.ipynb`)
+1️⃣ Exploratory & Prescriptive Analytics (`Phase_1.ipynb`, `Phase_1_EDA.ipynb`)
 Extracts actionable business insights from the relational database.
 
-* **Promotion ROI:** Analyzes which promotional campaigns drive profitable growth.
-* **Return Rate Deep-Dive:** Identifies key drivers behind product returns.
-* **Customer Segmentation:** Segments users using RFM (Recency, Frequency, Monetary) to find "Golden Customers."
-* **Seasonal Demand Planning:** Maps historical seasonal trends for inventory optimization.
+➤ Promotion ROI: Analyzes which promotional campaigns drive profitable growth.
+➤ Return Rate Deep-Dive: Identifies key drivers behind product returns.
+➤ Customer Segmentation: Segments users using RFM (Recency, Frequency, Monetary) to find "Golden Customers."
+➤ Seasonal Demand Planning: Maps historical seasonal trends for inventory optimization.
 
-### 2. Data Preprocessing & Feature Engineering (`Phase_2.ipynb`)
+2️⃣ Data Preprocessing & Feature Engineering (`Phase_2.ipynb`)
 Wrangling raw dimensional tables into a unified, time-series-ready format.
 
-* Aggregates daily operational metrics (sales, traffic, shipments).
-* Handles missing values, aligns timelines, and addresses anomalies.
-* Generates rolling aggregates and temporal lag features required for advanced modeling.
+➤ Aggregates daily operational metrics (sales, traffic, shipments).
+➤ Handles missing values, aligns timelines, and addresses anomalies.
+➤ Generates rolling aggregates and temporal lag features required for advanced modeling.
 
-### 3. Hybrid ML Forecasting (`Phase_3.ipynb`)
+3️⃣ Hybrid ML Forecasting (`Phase_3.ipynb`)
 Forecasts Daily Revenue and COGS over an extensive 548-day horizon.
 
-* **Prophet + XGBoost Hybrid:** Uses Meta's Prophet to capture macro trends and seasonality. XGBoost is applied to predict the residuals (traffic spikes, momentum, promotional impacts).
-* **Recursive Forecasting:** Implements dynamic lag mechanisms updated day-by-day throughout the test period.
-* **Model Explainability:** Integrates SHAP to interpret feature importance and explain the drivers of the XGBoost predictions.
+➤ Prophet + XGBoost Hybrid: Uses Meta's Prophet to capture macro trends and seasonality. XGBoost is applied to predict the residuals (traffic spikes, momentum, promotional impacts).
+➤ Recursive Forecasting: Implements dynamic lag mechanisms updated day-by-day throughout the test period.
+➤ Model Explainability: Integrates SHAP to interpret feature importance and explain the drivers of the XGBoost predictions.
 
----
+────────────────────────────────────────
 
-## 🛠️ Tech Stack
+🛠️ TECH STACK
 
-* **Data Manipulation:** `pandas`, `numpy`
-* **Data Visualization:** `matplotlib`, `seaborn`
-* **Time Series & Machine Learning:** `prophet`, `xgboost`, `scikit-learn`
-* **Explainable AI & Hyperparameter Tuning:** `shap`, `optuna`
+⬩ Data Manipulation: pandas, numpy
+⬩ Data Visualization: matplotlib, seaborn
+⬩ Time Series & Machine Learning: prophet, xgboost, scikit-learn
+⬩ Explainable AI & Hyperparameter Tuning: shap, optuna
 
----
+────────────────────────────────────────
 
-## 🏃‍♂️ Execution Order
+🏃‍♂️ EXECUTION ORDER
 
 To reproduce the full pipeline and avoid missing data dependencies, run the notebooks in the `notebook/` directory in the following order:
 
-1. **`Phase_1.ipynb`** (For Data Cleaning, Auditing)
-2. **`Phase_1_EDA.ipynb`** (For data exploration and business intelligence)
-3. **`Phase_2.ipynb`** (To generate the final merged and cleaned dataset for modeling)
-4. **`Phase_3.ipynb`** (To train the final hybrid model, generate predictions, and output SHAP explanations)
+[ 1 ] `Phase_1.ipynb` (For Data Cleaning, Auditing)
+[ 2 ] `Phase_1_EDA.ipynb` (For data exploration and business intelligence)
+[ 3 ] `Phase_2.ipynb` (To generate the final merged and cleaned dataset for modeling)
+[ 4 ] `Phase_3.ipynb` (To train the final hybrid model, generate predictions, and output SHAP explanations)
